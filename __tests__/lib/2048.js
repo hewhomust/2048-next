@@ -12,17 +12,17 @@ describe("newSquareNumber()", () => {
     jest.spyOn(Math, "random").mockRestore()
   })
 
-  it("given a random value less than 0.7 returns 2", () => {
+  it("receiving a random value less than 0.7 returns 2", () => {
     jest.spyOn(Math, "random").mockReturnValue(0.6)
     expect(newSquareNumber()).toBe(2)
   })
 
-  it("given a random value greater than 0.7 returns 4", () => {
+  it("receiving a random value greater than 0.7 returns 4", () => {
     jest.spyOn(Math, "random").mockReturnValue(0.8)
     expect(newSquareNumber()).toBe(4)
   })
 
-  it("given a random value equal to 0.7 returns 4", () => {
+  it("receiving a random value equal to 0.7 returns 4", () => {
     jest.spyOn(Math, "random").mockReturnValue(0.7)
     expect(newSquareNumber()).toBe(4)
   })
@@ -30,7 +30,7 @@ describe("newSquareNumber()", () => {
 
 describe("moveTiles()", () => {
   describe("no collisions", () => {
-    test("left", () => {
+    test("move left", () => {
       const startingBoard = [
         ["", "", "2", "8"],
         ["", "", "2", ""],
@@ -48,7 +48,7 @@ describe("moveTiles()", () => {
       expect(moveTiles(startingBoard, "LEFT")).toEqual(endingBoard)
     })
 
-    test("right", () => {
+    test("move right", () => {
       const startingBoard = [
         ["", "", "", ""],
         ["", "", "2", "8"],
@@ -66,7 +66,7 @@ describe("moveTiles()", () => {
       expect(moveTiles(startingBoard, "RIGHT")).toEqual(endingBoard)
     })
 
-    test("up", () => {
+    test("move up", () => {
       const startingBoard = [
         ["", "", "", ""],
         ["", "", "2", "2"],
@@ -84,7 +84,7 @@ describe("moveTiles()", () => {
       expect(moveTiles(startingBoard, "UP")).toEqual(endingBoard)
     })
 
-    test("down", () => {
+    test("move down", () => {
       const startingBoard = [
         ["", "", "", ""],
         ["", "", "2", "2"],
@@ -104,7 +104,7 @@ describe("moveTiles()", () => {
   })
 
   describe("single collision", () => {
-    test("left", () => {
+    test("move left", () => {
       const startingBoard = [
         ["", "", "2", "8"],
         ["", "", "2", "2"],
@@ -122,7 +122,7 @@ describe("moveTiles()", () => {
       expect(moveTiles(startingBoard, "LEFT")).toEqual(endingBoard)
     })
 
-    test("right", () => {
+    test("move right", () => {
       const startingBoard = [
         ["", "", "", ""],
         ["", "", "2", "2"],
@@ -140,7 +140,7 @@ describe("moveTiles()", () => {
       expect(moveTiles(startingBoard, "RIGHT")).toEqual(endingBoard)
     })
 
-    test("up", () => {
+    test("move up", () => {
       const startingBoard = [
         ["", "", "", ""],
         ["", "", "8", ""],
@@ -158,7 +158,7 @@ describe("moveTiles()", () => {
       expect(moveTiles(startingBoard, "UP")).toEqual(endingBoard)
     })
 
-    test("down", () => {
+    test("move down", () => {
       const startingBoard = [
         ["", "", "", ""],
         ["", "", "4", ""],
@@ -178,7 +178,7 @@ describe("moveTiles()", () => {
   })
 
   describe("multiple collisions", () => {
-    test("left", () => {
+    test("move left", () => {
       const startingBoard = [
         ["2", "2", "4", "4"],
         ["", "", "", ""],
@@ -196,7 +196,7 @@ describe("moveTiles()", () => {
       expect(moveTiles(startingBoard, "LEFT")).toEqual(endingBoard)
     })
 
-    test("right", () => {
+    test("move right", () => {
       const startingBoard = [
         ["", "", "", ""],
         ["2", "2", "4", "4"],
@@ -214,7 +214,7 @@ describe("moveTiles()", () => {
       expect(moveTiles(startingBoard, "RIGHT")).toEqual(endingBoard)
     })
 
-    test("up", () => {
+    test("move up", () => {
       const startingBoard = [
         ["", "", "2", ""],
         ["", "", "2", ""],
@@ -232,7 +232,7 @@ describe("moveTiles()", () => {
       expect(moveTiles(startingBoard, "UP")).toEqual(endingBoard)
     })
 
-    test("down", () => {
+    test("move down", () => {
       const startingBoard = [
         ["", "", "4", ""],
         ["", "", "4", ""],
@@ -252,7 +252,7 @@ describe("moveTiles()", () => {
   })
 
   describe("single collision three connected same numbers", () => {
-    test("left", () => {
+    test("move left", () => {
       const startingBoard = [
         ["2", "2", "2", ""],
         ["", "", "", ""],
@@ -270,7 +270,7 @@ describe("moveTiles()", () => {
       expect(moveTiles(startingBoard, "LEFT")).toEqual(endingBoard)
     })
 
-    test("right", () => {
+    test("move right", () => {
       const startingBoard = [
         ["", "", "", ""],
         ["2", "2", "2", ""],
@@ -288,7 +288,7 @@ describe("moveTiles()", () => {
       expect(moveTiles(startingBoard, "RIGHT")).toEqual(endingBoard)
     })
 
-    test("up", () => {
+    test("move up", () => {
       const startingBoard = [
         ["", "", "2", ""],
         ["", "", "2", ""],
@@ -306,7 +306,7 @@ describe("moveTiles()", () => {
       expect(moveTiles(startingBoard, "UP")).toEqual(endingBoard)
     })
 
-    test("down", () => {
+    test("move down", () => {
       const startingBoard = [
         ["", "", "4", ""],
         ["", "", "4", ""],
