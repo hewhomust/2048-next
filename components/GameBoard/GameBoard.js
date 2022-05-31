@@ -1,4 +1,4 @@
-import GameSquare from "../GameSquare/GameSquare"
+import GameTile from "../GameTile/GameSquare"
 import { useState } from "react"
 
 const GameBoard = () => {
@@ -21,7 +21,7 @@ const GameBoard = () => {
     <>
       <div className="bg-[#BBADA0] rounded-md p-[0.6rem] lg:p-[0.9rem] grid grid-cols-4 gap-[0.6rem] lg:gap-[1rem] elevation-2">
         {squares.map((square) => {
-          return <GameSquare key={square} number={number}></GameSquare>
+          return <GameTile key={square} number={number}></GameTile>
         })}
       </div>
     </>

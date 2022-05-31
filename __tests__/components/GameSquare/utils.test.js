@@ -2,7 +2,7 @@ import {
   getFontSize,
   getBackgroundColour,
   getTextColour,
-} from "../../../components/GameSquare/utils"
+} from "../../../components/GameTile/utils"
 
 describe("getFontSize()", () => {
   it("given a one digit number returns 4xl", () => {
@@ -27,10 +27,6 @@ describe("getFontSize()", () => {
 })
 
 describe("getBackgroundColour()", () => {
-  it("exists", () => {
-    getBackgroundColour(2)
-  })
-
   it("given the number 2 returns #EEE4DA", () => {
     expect(getBackgroundColour(2)).toBe("#EEE4DA")
   })

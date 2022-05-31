@@ -2,7 +2,7 @@ import { getBaseLog } from "../../utils"
 import { useEffect, useState } from "react"
 import { getFontSize, getBackgroundColour, getTextColour } from "./utils"
 
-const GameSquare = ({ number }) => {
+const GameTile = ({ number }) => {
   if (!Number.isInteger(getBaseLog(2, number)) || number < 2) {
     number = ""
   }
@@ -26,4 +26,4 @@ const GameSquare = ({ number }) => {
   )
 }
 
-export default GameSquare
+export default GameTile
