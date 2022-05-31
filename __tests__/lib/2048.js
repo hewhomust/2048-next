@@ -29,6 +29,27 @@ describe("newSquareNumber()", () => {
 })
 
 describe("moveTiles()", () => {
+  describe("given a direction not in UP,DOWN,LEFT,RIGHT", () => {
+    it("throws an error", () => {
+      const startingBoard = [
+        ["", "", "2", "8"],
+        ["", "", "2", ""],
+        ["", "", "", ""],
+        ["", "", "", ""],
+      ]
+
+      const endingBoard = [
+        ["2", "8", "", ""],
+        ["2", "", "", ""],
+        ["", "", "", ""],
+        ["", "", "", ""],
+      ]
+
+      expect(() => moveTiles(startingBoard, "DIRECTION")).toThrow(
+        "DIRECTION is not UP, DOWN, LEFT or RIGHT"
+      )
+    })
+  })
   describe("no collisions", () => {
     test("move left", () => {
       const startingBoard = [
