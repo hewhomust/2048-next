@@ -1,11 +1,5 @@
-import produce from "immer"
-import {
-  newSquareNumber,
-  moveTiles,
-  getColumnsFromBoard,
-  getBoardFromColumns,
-  moveLineTiles,
-} from "../../lib/2048"
+import { newSquareNumber, moveTiles, initializeBoard } from "../../lib/2048"
+import flatten from "lodash/flatten"
 
 describe("newSquareNumber()", () => {
   afterEach(() => {
@@ -14,17 +8,17 @@ describe("newSquareNumber()", () => {
 
   it("receiving a random value less than 0.7 returns 2", () => {
     jest.spyOn(Math, "random").mockReturnValue(0.6)
-    expect(newSquareNumber()).toBe(2)
+    expect(newSquareNumber()).toBe("2")
   })
 
   it("receiving a random value greater than 0.7 returns 4", () => {
     jest.spyOn(Math, "random").mockReturnValue(0.8)
-    expect(newSquareNumber()).toBe(4)
+    expect(newSquareNumber()).toBe("4")
   })
 
   it("receiving a random value equal to 0.7 returns 4", () => {
     jest.spyOn(Math, "random").mockReturnValue(0.7)
-    expect(newSquareNumber()).toBe(4)
+    expect(newSquareNumber()).toBe("4")
   })
 })
 
@@ -344,5 +338,53 @@ describe("moveTiles()", () => {
 
       expect(moveTiles(startingBoard, "DOWN")).toEqual(endingBoard)
     })
+  })
+})
+
+describe("initializeBoard()", () => {
+  afterEach(() => {
+    jest.spyOn(Math, "random").mockRestore()
+  })
+
+  test("returns a 4x4 array of strings", () => {
+    const board = initializeBoard()
+
+    expect(board).toHaveLength(4)
+    expect(Array.isArray(board)).toBe(true)
+
+    board.forEach((row) => {
+      expect(Array.isArray(row)).toBe(true)
+      expect(row).toHaveLength(4)
+
+      row.forEach((col) => {
+        expect(typeof col).toBe("string")
+      })
+    })
+  })
+
+  test("new board has two filled tiles", () => {
+    const board = initializeBoard()
+
+    const filledTiles = flatten(board).filter((tile) => tile)
+
+    expect(filledTiles.length).toBe(2)
+  })
+
+  test("filled board tiles are either 2 or 4", () => {
+    const trials = 1000
+    const outcomes = {}
+
+    for (let i = 0; i < trials; i++) {
+      const board = initializeBoard()
+      const filledTiles = flatten(board).filter((tile) => {
+        return tile
+      })
+
+      filledTiles.forEach((tile) => {
+        outcomes[tile] = true
+      })
+    }
+
+    expect(outcomes).toEqual({ 2: true, 4: true })
   })
 })

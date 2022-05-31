@@ -27,4 +27,8 @@ function padArrayEnd(arr, len, padding) {
   return arr.concat(Array(len - arr.length).fill(padding))
 }
 
-export { getBaseLog, transposeArray, padArrayStart, padArrayEnd }
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max)
+}
+
+export { getBaseLog, transposeArray, padArrayStart, padArrayEnd, getRandomInt }
