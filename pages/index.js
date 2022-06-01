@@ -4,6 +4,8 @@ import NewGameButton from "../components/NewGameButton/NewGameButton"
 import GameBoard from "../components/GameBoard/GameBoard"
 import GameDescription from "../components/GameDescription/GameDescription"
 import use2048 from "../hooks/use2048"
+import { useSwipeable } from "react-swipeable"
+import { useState } from "react"
 
 export default function Home() {
   const {
@@ -14,6 +16,7 @@ export default function Home() {
     bestScore,
     won,
     setKeepPlaying: keepPlaying,
+    addSwipe,
   } = use2048()
 
   return (
@@ -22,9 +25,9 @@ export default function Home() {
         <title>2048</title>
       </Head>
 
-      <div className="bg-[#FAF8EF] min-h-screen">
+      <div {...addSwipe} className="bg-[#FAF8EF] min-h-screen">
         <div className="mx-auto max-w-[500px] lg:px-0 px-10  pt-4 pb-40">
-          <div className="flex items-end justify-between mb-2 lg:items-center lg:mb-4">
+          <div className="flex items-end justify-between mb-6 lg:items-center">
             <h1 className="text-3xl font-bold lg:text-7xl lg:mt-8 lg:tracking-wide text-brown-100">
               2048
             </h1>
@@ -38,9 +41,6 @@ export default function Home() {
               <p className="">
                 Join the tiles, get to{" "}
                 <span className="font-bold text-brown-100">2048!</span>
-              </p>
-              <p className="font-bold underline text-brown-100">
-                How to play →
               </p>
             </div>
             <div>

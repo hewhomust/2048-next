@@ -1,18 +1,20 @@
 import { useCallback, useEffect, useState } from "react"
 import { DIRECTIONS } from "../lib/2048"
+import { useSwipeable } from "react-swipeable"
 
-const useMoveTiles = () => {
+const usePlayerInput = () => {
   const [moveDirection, setMoveDirection] = useState()
   const [moveCount, setMoveCount] = useState(0)
+
+  const handleInput = (direction) => {
+    setMoveDirection(direction)
+    setMoveCount((count) => count + 1)
+  }
 
   const handleKeydown = useCallback((e) => {
     if (["ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown"].includes(e.key)) {
       e.preventDefault()
-      setMoveDirection(
-        (prev) => DIRECTIONS[e.key.split("Arrow")[1].toUpperCase()]
-      )
-
-      setMoveCount((prev) => prev + 1)
+      handleInput(DIRECTIONS[e.key.split("Arrow")[1].toUpperCase()])
     }
   }, [])
 
@@ -24,7 +26,17 @@ const useMoveTiles = () => {
     }
   }, [handleKeydown])
 
-  return { moveDirection, moveCount }
+  const handleSwipe = useCallback((e) => {
+    handleInput(e.dir.toUpperCase())
+  }, [])
+
+  const addSwipe = useSwipeable({
+    onSwiped: handleSwipe,
+    preventScrollOnSwipe: true,
+    swipeDuration: 500,
+  })
+
+  return { moveDirection, moveCount, addSwipe }
 }
 
-export default useMoveTiles
+export default usePlayerInput

@@ -1,4 +1,4 @@
-import useMoveTiles from "./useMoveTiles"
+import usePlayerInput from "./usePlayerInput"
 import {
   EMPTY_BOARD,
   initializeBoard,
@@ -21,7 +21,7 @@ const initialState = {
 const LOCAL_STORAGE_KEY = "2048_GAME_STATE"
 
 const use2048 = () => {
-  const { moveDirection, moveCount } = useMoveTiles()
+  const { moveDirection, moveCount, addSwipe } = usePlayerInput()
   const [gameState, setState] = useState(initialState)
   const { bestScore, setBestScore } = useBestScoreHook()
   const [initialized, setInitialized] = useState(false)
@@ -102,7 +102,16 @@ const use2048 = () => {
     })
   }, [])
 
-  return { board, newGame, score, gameOver, bestScore, won, setKeepPlaying }
+  return {
+    board,
+    newGame,
+    score,
+    gameOver,
+    bestScore,
+    won,
+    setKeepPlaying,
+    addSwipe,
+  }
 }
 
 export default use2048
