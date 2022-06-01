@@ -1,9 +1,9 @@
-import GameTile from "../GameTile/GameTile"
 import { useMemo } from "react"
 import flatten from "lodash/flatten"
 import { AnimatePresence, motion } from "framer-motion"
 import GameOverModal from "../GameOverModal/GameOverModal"
 import GameTileContainer from "../GameTile/GameTile"
+import GameWonModal from "../GameWonModal/GameWonModal"
 
 const variants = {
   initial: {
@@ -19,7 +19,7 @@ const variants = {
   },
 }
 
-const GameBoard = ({ board, gameOver }) => {
+const GameBoard = ({ board, gameOver, won, keepPlaying }) => {
   const squares = useMemo(() => {
     return flatten(board)
   }, [board])
@@ -29,6 +29,7 @@ const GameBoard = ({ board, gameOver }) => {
       <motion.div className="bg-brown-200 rounded-md relative p-[0.6rem] lg:p-[0.9rem] grid grid-cols-4 gap-[0.6rem] lg:gap-[1rem] elevation-2">
         <AnimatePresence>
           {gameOver && <GameOverModal></GameOverModal>}
+          {won && <GameWonModal keepPlaying={keepPlaying}></GameWonModal>}
         </AnimatePresence>
         {squares.map((square, index) => {
           return (

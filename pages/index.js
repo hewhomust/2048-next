@@ -6,7 +6,15 @@ import GameDescription from "../components/GameDescription/GameDescription"
 import use2048 from "../hooks/use2048"
 
 export default function Home() {
-  const { board, newGame, score, gameOver, bestScore } = use2048()
+  const {
+    board,
+    newGame,
+    score,
+    gameOver,
+    bestScore,
+    won,
+    setKeepPlaying: keepPlaying,
+  } = use2048()
 
   return (
     <>
@@ -40,7 +48,12 @@ export default function Home() {
             </div>
           </div>
           <div className="mb-8">
-            <GameBoard board={board} gameOver={gameOver}></GameBoard>
+            <GameBoard
+              board={board}
+              gameOver={gameOver}
+              won={won}
+              keepPlaying={keepPlaying}
+            ></GameBoard>
           </div>
           <div>
             <GameDescription></GameDescription>
