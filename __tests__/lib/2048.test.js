@@ -1,4 +1,12 @@
-import { newSquareNumber, moveTiles, initializeBoard } from "../../lib/2048"
+import {
+  newSquareNumber,
+  moveTiles,
+  initializeBoard,
+  scoreDelta,
+  gameOver,
+  availableMoveDirections,
+  DIRECTIONS,
+} from "../../lib/2048"
 import flatten from "lodash/flatten"
 
 describe("newSquareNumber()", () => {
@@ -83,16 +91,16 @@ describe("moveTiles()", () => {
 
     test("move up", () => {
       const startingBoard = [
+        ["", "", "", "2"],
+        ["", "", "", "4"],
         ["", "", "", ""],
-        ["", "", "2", "2"],
-        ["", "", "", ""],
-        ["", "", "", ""],
+        ["", "", "", "2"],
       ]
 
       const endingBoard = [
-        ["", "", "2", "2"],
-        ["", "", "", ""],
-        ["", "", "", ""],
+        ["", "", "", "2"],
+        ["", "", "", "4"],
+        ["", "", "", "2"],
         ["", "", "", ""],
       ]
 
@@ -386,5 +394,85 @@ describe("initializeBoard()", () => {
     }
 
     expect(outcomes).toEqual({ 2: true, 4: true })
+  })
+})
+
+describe("scoreDelta()", () => {
+  test("given the same initial and next board returns 0", () => {
+    const startingBoard = [
+      ["2", "2", "2", "8"],
+      ["", "", "", ""],
+      ["", "", "", ""],
+      ["", "", "", ""],
+    ]
+
+    const endingBoard = [
+      ["2", "2", "2", "8"],
+      ["", "", "", ""],
+      ["", "", "", ""],
+      ["", "", "", ""],
+    ]
+
+    expect(scoreDelta(startingBoard, endingBoard)).toBe(0)
+  })
+
+  test("given a new 4 in the endingBoard return 4", () => {
+    const startingBoard = [
+      ["", "", "2", "8"],
+      ["", "", "2", ""],
+      ["", "", "", ""],
+      ["", "", "", ""],
+    ]
+
+    const endingBoard = [
+      ["", "", "4", "8"],
+      ["", "", "", ""],
+      ["", "", "", ""],
+      ["", "", "", ""],
+    ]
+
+    expect(scoreDelta(startingBoard, endingBoard)).toBe(4)
+  })
+
+  test("given a new 4 and a new 8 in the endingBoard return 12", () => {
+    const startingBoard = [
+      ["", "2", "2", "4"],
+      ["", "", "2", "4"],
+      ["", "", "", ""],
+      ["", "", "", ""],
+    ]
+
+    const endingBoard = [
+      ["", "2", "4", "8"],
+      ["", "", "", ""],
+      ["", "", "", ""],
+      ["", "", "", ""],
+    ]
+
+    expect(scoreDelta(startingBoard, endingBoard)).toBe(12)
+  })
+})
+
+describe("gameOver()", () => {
+  test("given a board with available moves returns false", () => {
+    const board = [
+      ["", "2", "2", "4"],
+      ["", "", "2", "4"],
+      ["", "", "", ""],
+      ["", "", "", ""],
+    ]
+
+    expect(gameOver(board)).toBe(false)
+  })
+
+  test("given a board with no moves returns true", () => {
+    const board = [
+      ["4", "2", "4", "2"],
+      ["2", "4", "2", "4"],
+      ["4", "2", "4", "2"],
+      ["2", "4", "2", "4"],
+    ]
+
+    expect(gameOver(board)).toBe(true)
   })
 })
