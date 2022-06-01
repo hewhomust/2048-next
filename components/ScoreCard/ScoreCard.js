@@ -15,7 +15,7 @@ const variants = {
 
 const ScoreCard = ({ title, score }) => {
   return (
-    <motion.div className="bg-[#BBADA0] px-3 pt-2 lg:px-6 lg:pb-2 pb-1 flex flex-col items-center text-white rounded-md">
+    <motion.div className="flex flex-col items-center px-3 pt-2 pb-1 text-white rounded-md bg-brown-200 lg:px-6 lg:pb-2">
       <motion.div className="uppercase text-[#eee4da] text-sm font-semibold">
         {title}
       </motion.div>

@@ -26,7 +26,7 @@ const GameBoard = ({ board, gameOver }) => {
 
   return (
     <>
-      <motion.div className="bg-[#BBADA0] rounded-md relative p-[0.6rem] lg:p-[0.9rem] grid grid-cols-4 gap-[0.6rem] lg:gap-[1rem] elevation-2">
+      <motion.div className="bg-brown-200 rounded-md relative p-[0.6rem] lg:p-[0.9rem] grid grid-cols-4 gap-[0.6rem] lg:gap-[1rem] elevation-2">
         <AnimatePresence>
           {gameOver && <GameOverModal></GameOverModal>}
         </AnimatePresence>

@@ -17,7 +17,7 @@ export default function Home() {
       <div className="bg-[#FAF8EF] min-h-screen">
         <div className="mx-auto max-w-[500px] lg:px-0 px-10  pt-4 pb-40">
           <div className="flex items-end justify-between mb-2 lg:items-center lg:mb-4">
-            <h1 className="font-bold text-3xl lg:text-7xl lg:mt-8 lg:tracking-wide text-[#776E65]">
+            <h1 className="text-3xl font-bold lg:text-7xl lg:mt-8 lg:tracking-wide text-brown-100">
               2048
             </h1>
             <div className="flex gap-1">
@@ -29,9 +29,9 @@ export default function Home() {
             <div className="text-sm text-[15px] leading-relaxed">
               <p className="">
                 Join the tiles, get to{" "}
-                <span className="font-bold text-[#776e65]">2048!</span>
+                <span className="font-bold text-brown-100">2048!</span>
               </p>
-              <p className="underline font-bold text-[#776e65]">
+              <p className="font-bold underline text-brown-100">
                 How to play →
               </p>
             </div>
