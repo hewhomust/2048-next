@@ -4,8 +4,6 @@ import NewGameButton from "../components/NewGameButton/NewGameButton"
 import GameBoard from "../components/GameBoard/GameBoard"
 import GameDescription from "../components/GameDescription/GameDescription"
 import use2048 from "../hooks/use2048"
-import { useSwipeable } from "react-swipeable"
-import { useState } from "react"
 
 export default function Home() {
   const {

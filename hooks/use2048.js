@@ -111,6 +111,7 @@ const use2048 = () => {
     won,
     setKeepPlaying,
     addSwipe,
+    setState,
   }
 }
 
