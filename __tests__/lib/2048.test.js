@@ -5,6 +5,7 @@ import {
   scoreDelta,
   gameOver,
   hasWon,
+  isBoardEmpty,
 } from "../../lib/2048"
 import flatten from "lodash/flatten"
 
@@ -499,5 +500,29 @@ describe("hasWon()", () => {
     ]
 
     expect(hasWon(board)).toBe(true)
+  })
+})
+
+describe("isBoardEmpty()", () => {
+  test("given an empty board returns true", () => {
+    const board = [
+      ["", "", "", ""],
+      ["", "", "", ""],
+      ["", "", "", ""],
+      ["", "", "", ""],
+    ]
+
+    expect(isBoardEmpty(board)).toBe(true)
+  })
+
+  test("given a non empty board returns false", () => {
+    const board = [
+      ["2", "", "", ""],
+      ["", "", "", ""],
+      ["", "", "", ""],
+      ["", "", "", ""],
+    ]
+
+    expect(isBoardEmpty(board)).toBe(false)
   })
 })
