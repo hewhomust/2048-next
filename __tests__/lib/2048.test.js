@@ -19,13 +19,13 @@ describe("newSquareNumber()", () => {
     expect(newSquareNumber()).toBe("2")
   })
 
-  it("receiving a random value greater than 0.7 returns 4", () => {
-    jest.spyOn(Math, "random").mockReturnValue(0.8)
+  it("receiving a random value greater than 0.9 returns 4", () => {
+    jest.spyOn(Math, "random").mockReturnValue(0.95)
     expect(newSquareNumber()).toBe("4")
   })
 
-  it("receiving a random value equal to 0.7 returns 4", () => {
-    jest.spyOn(Math, "random").mockReturnValue(0.7)
+  it("receiving a random value equal to 0.9 returns 4", () => {
+    jest.spyOn(Math, "random").mockReturnValue(0.9)
     expect(newSquareNumber()).toBe("4")
   })
 })
