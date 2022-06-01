@@ -2,7 +2,7 @@ import { useMemo } from "react"
 import flatten from "lodash/flatten"
 import { AnimatePresence, motion } from "framer-motion"
 import GameOverModal from "../GameOverModal/GameOverModal"
-import GameTileContainer from "../GameTile/GameTile"
+import GameTile from "../GameTile/GameTile"
 import GameWonModal from "../GameWonModal/GameWonModal"
 
 const variants = {
@@ -32,9 +32,7 @@ const GameBoard = ({ board, gameOver, won, keepPlaying }) => {
           {won && <GameWonModal keepPlaying={keepPlaying}></GameWonModal>}
         </AnimatePresence>
         {squares.map((square, index) => {
-          return (
-            <GameTileContainer key={index} number={square}></GameTileContainer>
-          )
+          return <GameTile key={index} number={square}></GameTile>
         })}
       </motion.div>
     </>

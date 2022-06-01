@@ -18,37 +18,42 @@ const variants = {
 }
 
 const GameTile = ({ number }) => {
+  if (!Number.isInteger(getBaseLog(2, number)) || number < 2) {
+    number = ""
+  }
+
   const fontSize = getFontSize(number, true)
   const backgroundColour = getBackgroundColour(parseInt(number, 10))
   const textColour = getTextColour(parseInt(number, 10))
   const fontSizeDigit = Number(fontSize.split("xl")[0])
 
   return (
-    <motion.div
-      style={{ backgroundColor: backgroundColour, color: textColour }}
-      className={`pointer-events-none w-full h-full select-none aspect-square rounded-md elevation-1 grid place-items-center lg:text-${
-        fontSizeDigit + 2
-      }xl text-${fontSize} font-bold`}
-    >
-      {number}
-    </motion.div>
+    <GameTileContainer>
+      {number && (
+        <motion.div
+          variants={variants}
+          initial="initial"
+          animate="animate"
+          style={{ backgroundColor: backgroundColour, color: textColour }}
+          className={`pointer-events-none w-full h-full select-none aspect-square rounded-md elevation-1 grid place-items-center lg:text-${
+            fontSizeDigit + 2
+          }xl text-${fontSize} font-bold`}
+        >
+          {number}
+        </motion.div>
+      )}
+    </GameTileContainer>
   )
 }
 
-const GameTileContainer = ({ number }) => {
-  if (!Number.isInteger(getBaseLog(2, number)) || number < 2) {
-    number = ""
-  }
-
-  number = number.toString()
-
+const GameTileContainer = ({ children }) => {
   return (
     <motion.div
       className={`bg-[#CDC1B4] pointer-events-none select-none aspect-square rounded-md elevation-1 grid place-items-center`}
     >
-      {number && <GameTile number={number}></GameTile>}
+      {children}
     </motion.div>
   )
 }
 
-export default GameTileContainer
+export default GameTile

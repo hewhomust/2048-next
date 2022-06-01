@@ -35,7 +35,7 @@ const GameWonModal = ({ keepPlaying }) => {
       <div className="flex flex-col items-center text-4xl font-bold text-white opacity-100 gap-y-4">
         You win!!!
         <motion.button
-          onClick={keepPlaying}
+          onClick={() => keepPlaying(true)}
           variants={variants}
           initial="initial"
           animate="enter"
