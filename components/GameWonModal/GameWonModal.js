@@ -32,9 +32,13 @@ const GameWonModal = ({ keepPlaying }) => {
       exit="exit"
       className="absolute top-0 left-0 z-10 grid w-full h-full bg-green-400 opacity-80 place-items-center"
     >
-      <div className="flex flex-col items-center text-4xl font-bold text-white opacity-100 gap-y-4">
-        You win!!!
+      <div
+        role="dialog"
+        className="flex flex-col items-center text-4xl font-bold text-white opacity-100 gap-y-4"
+      >
+        <h2 data-testid="gameWonText">You win!!!</h2>
         <motion.button
+          data-testid="keepPlayingButton"
           onClick={() => keepPlaying(true)}
           variants={variants}
           initial="initial"

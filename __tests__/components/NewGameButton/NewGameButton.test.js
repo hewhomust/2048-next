@@ -8,6 +8,7 @@ describe("NewGameButton", () => {
     render(<NewGameButton newGameHandler={newGameHandlerMock}></NewGameButton>)
     const newGameButton = screen.getByRole("button")
     expect(newGameButton).toHaveTextContent("New Game")
+    expect(newGameButton).toBeVisible()
   })
 
   test("calls newGameHandler when clicked", () => {
