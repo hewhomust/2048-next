@@ -4,8 +4,7 @@ import {
   initializeBoard,
   scoreDelta,
   gameOver,
-  availableMoveDirections,
-  DIRECTIONS,
+  hasWon,
 } from "../../lib/2048"
 import flatten from "lodash/flatten"
 
@@ -474,5 +473,31 @@ describe("gameOver()", () => {
     ]
 
     expect(gameOver(board)).toBe(true)
+  })
+})
+
+describe("hasWon()", () => {
+  test("given a board without a 2048 tile returns false", () => {
+    const board = [
+      ["", "2", "2", "4"],
+      ["", "", "2", "4"],
+      ["", "", "", ""],
+      ["", "", "", ""],
+    ]
+
+    expect(hasWon(board)).toBe(false)
+  })
+})
+
+describe("hasWon()", () => {
+  test("given a board with a 2048 tile returns true", () => {
+    const board = [
+      ["", "2", "2", "2048"],
+      ["", "", "2", "4"],
+      ["", "", "", ""],
+      ["", "", "", ""],
+    ]
+
+    expect(hasWon(board)).toBe(true)
   })
 })
