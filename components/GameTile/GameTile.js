@@ -31,9 +31,9 @@ const GameTile = ({ number }) => {
     <GameTileContainer>
       {number && (
         <motion.div
-          variants={variants}
-          initial="initial"
-          animate="animate"
+          // variants={variants}
+          // initial="initial"
+          // animate="animate"
           style={{ backgroundColor: backgroundColour, color: textColour }}
           className={`pointer-events-none w-full h-full select-none aspect-square rounded-md elevation-1 grid place-items-center lg:text-${
             fontSizeDigit + 2
