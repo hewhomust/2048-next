@@ -12,4 +12,8 @@ RUN yarn
 
 COPY --chown=node:node . .
 
-CMD ["npm","run","dev"]
+ENTRYPOINT ["npm"]
+
+ENV TERM xterm-256color
+
+CMD ["run","dev"]
