@@ -1,0 +1,15 @@
+FROM node:18-alpine3.14
+
+USER node
+
+RUN mkdir /home/node/code
+
+WORKDIR /home/node/code
+
+COPY --chown=node:node yarn.lock package.json ./
+
+RUN yarn
+
+COPY --chown=node:node . .
+
+CMD ["npm","run","dev"]

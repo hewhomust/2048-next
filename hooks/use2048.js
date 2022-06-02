@@ -45,7 +45,7 @@ const use2048 = () => {
       }
 
       return produce(prev, (draft) => {
-        draft.board = aboard
+        draft.board = initializeBoard()
         draft.score = 0
         draft.keepPlaying = false
       })

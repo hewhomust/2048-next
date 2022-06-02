@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  example-service:
+    build:
+       context: .
+       dockerfile: Dockerfile.dev
+    volumes:
+      - .:/home/node/code
+    ports:
+      - 5000:3000
+      - 9229:9229
