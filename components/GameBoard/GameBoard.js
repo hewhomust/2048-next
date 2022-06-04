@@ -1,11 +1,11 @@
-import { useEffect, useMemo } from "react"
-import flatten from "lodash/flatten"
 import { AnimatePresence, motion } from "framer-motion"
 import GameOverModal from "../GameOverModal/GameOverModal"
 import GameTile from "../GameTile/GameTile"
 import GameWonModal from "../GameWonModal/GameWonModal"
 import Grid from "../Grid/Grid"
 import useStore from "../../stores/2048"
+import useGameOver from "../../hooks/useGameOver"
+import useWon from "../../hooks/useWon"
 
 const variants = {
   initial: {
@@ -21,8 +21,11 @@ const variants = {
   },
 }
 
-const GameBoard = ({ gameOver, won, keepPlaying }) => {
+const GameBoard = () => {
   const board = useStore((state) => state.board)
+  const { gameOver } = useGameOver()
+  const { won } = useWon()
+  const keepPlaying = useStore((state) => state.setKeepPlaying)
 
   return (
     <>

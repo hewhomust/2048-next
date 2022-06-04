@@ -1,21 +1,20 @@
 import create from "zustand"
 import { immer } from "zustand/middleware/immer"
 import {
-  initializeBoard,
+  initializeBoard as initializeBoardState,
   takeTurn,
   boardsEqual,
   newTile,
   scoreDelta,
-  beforeMerged,
+  isBoardEmpty,
   maxID,
 } from "../lib/2048"
 
-const LOCAL_STORAGE_KEY = "2048_GAME_STATE"
+export const LOCAL_STORAGE_KEY = "2048_GAME_STATE"
 
 const useStore = create(
   immer((set, get) => ({
     board: [],
-    number: 0,
     tileHeight: 0,
     tileGap: 0,
     animationDuration: 300,
@@ -25,7 +24,7 @@ const useStore = create(
     keepPlaying: false,
     won: false,
     moving: false,
-    gameOver: false,
+    initialized: false,
     move: (direction) => {
       if (get().moving) {
         return
@@ -64,7 +63,23 @@ const useStore = create(
     },
     initializeBoard: () => {
       set((prev) => {
-        prev.board = initializeBoard()
+        const localStorageState =
+          localStorage.getItem(LOCAL_STORAGE_KEY) &&
+          JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))
+
+        prev.initialized = true
+
+        if (localStorageState && !isBoardEmpty(localStorageState.board)) {
+          const gameState = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))
+
+          prev.board = gameState.board
+          prev.score = gameState.score
+          prev.keepPlaying = gameState.keepPlaying
+
+          return prev
+        }
+
+        prev.board = initializeBoardState(prev.board[0] ? maxID(prev.board) : 1)
         return prev
       })
     },
@@ -85,8 +100,21 @@ const useStore = create(
         return state
       })
     },
-    newGame: () => {},
-    setKeepPlaying: () => {},
+    newGame: () => {
+      set((state) => {
+        state.keepPlaying = false
+        state.score = 0
+        state.board = initializeBoardState(
+          state.board[0] ? maxID(state.board) : 1
+        )
+        return state
+      })
+    },
+    setKeepPlaying: (keepPlaying) => {
+      set((state) => {
+        state.keepPlaying = keepPlaying
+      })
+    },
   }))
 )
 

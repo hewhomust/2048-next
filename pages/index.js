@@ -3,32 +3,20 @@ import Head from "next/head"
 import NewGameButton from "../components/NewGameButton/NewGameButton"
 import GameBoard from "../components/GameBoard/GameBoard"
 import GameDescription from "../components/GameDescription/GameDescription"
-import use2048 from "../hooks/use2048"
+import useStoreGameState from "../hooks/useStoreGameState"
 import useStore from "../stores/2048"
 import { useEffect } from "react"
 import usePlayerInput from "../hooks/usePlayerInput"
+import useBestScore from "../hooks/useBestScoreHook"
 
 export default function Home() {
   const initializeBoard = useStore((state) => state.initializeBoard)
   const { moveDirection, moveCount, addSwipe } = usePlayerInput()
   const score = useStore((state) => state.score)
-  const bestScore = useStore((state) => state.bestScore)
-  const newGame = useStore((state) => state.newGame)
-  const gameOver = useStore((state) => state.gameOver)
-  const won = useStore((state) => state.won)
-  const keepPlaying = useStore((state) => state.setKeepPlaying)
-  const move = useStore((state) => state.move)
+  const { bestScore } = useBestScore()
 
-  // const {
-  //   board,
-  //   newGame,
-  //   score,
-  //   gameOver,
-  //   bestScore,
-  //   won,
-  //   setKeepPlaying: keepPlaying,
-  //   addSwipe,
-  // } = use2048()
+  const move = useStore((state) => state.move)
+  useStoreGameState()
 
   useEffect(() => {
     initializeBoard()
@@ -41,8 +29,6 @@ export default function Home() {
 
     move(moveDirection)
   }, [moveDirection, moveCount, move])
-
-  // {...addSwipe}
 
   return (
     <>
@@ -69,15 +55,11 @@ export default function Home() {
               </p>
             </div>
             <div>
-              <NewGameButton newGameHandler={newGame}></NewGameButton>
+              <NewGameButton></NewGameButton>
             </div>
           </div>
           <div className="mb-8">
-            <GameBoard
-              gameOver={gameOver}
-              won={won}
-              keepPlaying={keepPlaying}
-            ></GameBoard>
+            <GameBoard></GameBoard>
           </div>
           <div>
             <GameDescription></GameDescription>
