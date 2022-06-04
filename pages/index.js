@@ -49,7 +49,7 @@ export default function Home() {
           </div>
           <div className="flex items-end justify-between mb-4 lg:mb-10 ">
             <div className="text-sm text-[15px] leading-relaxed">
-              <p className="">
+              <p className="text-lg lg:text-xl">
                 Join the tiles, get to{" "}
                 <span className="font-bold text-brown-100">2048!</span>
               </p>
