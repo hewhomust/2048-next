@@ -8,7 +8,8 @@ import {
   isBoardEmpty,
   beforeMerged,
 } from "../../lib/2048"
-import flatten from "lodash/flatten"
+
+import { flatten } from "ramda"
 
 describe("newSquareNumber()", () => {
   afterEach(() => {

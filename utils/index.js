@@ -1,5 +1,3 @@
-import { isEmpty, isEqual, xorWith } from "lodash"
-
 function getBaseLog(x, y) {
   return Math.log(y) / Math.log(x)
 }
