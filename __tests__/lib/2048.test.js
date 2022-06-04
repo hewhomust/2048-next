@@ -1,10 +1,10 @@
 import {
   newSquareNumber,
-  moveTiles,
   initializeBoard,
   scoreDelta,
   gameOver,
   hasWon,
+  takeTurn,
   isBoardEmpty,
   beforeMerged,
 } from "../../lib/2048"
@@ -31,7 +31,7 @@ describe("newSquareNumber()", () => {
   })
 })
 
-describe("moveTiles()", () => {
+describe("takeTurn()", () => {
   describe("given a direction not in UP,DOWN,LEFT,RIGHT", () => {
     it("throws an error", () => {
       const startingBoard = [
@@ -40,7 +40,7 @@ describe("moveTiles()", () => {
         { id: 3, value: 2, index: 6 },
       ]
 
-      expect(() => moveTiles(startingBoard, "DIRECTION")).toThrow(
+      expect(() => takeTurn(startingBoard, "DIRECTION")).toThrow(
         "DIRECTION is not UP, DOWN, LEFT or RIGHT"
       )
     })
@@ -70,7 +70,7 @@ describe("moveTiles()", () => {
         beforeMerged,
       }
 
-      expect(moveTiles(startingBoard, "LEFT")).toEqual(expected)
+      expect(takeTurn(startingBoard, "LEFT")).toEqual(expected)
     })
 
     test("move right", () => {
@@ -94,7 +94,7 @@ describe("moveTiles()", () => {
         beforeMerged,
       }
 
-      expect(moveTiles(startingBoard, "RIGHT")).toEqual(expected)
+      expect(takeTurn(startingBoard, "RIGHT")).toEqual(expected)
     })
 
     test("move up", () => {
@@ -117,7 +117,7 @@ describe("moveTiles()", () => {
         beforeMerged,
       }
 
-      expect(moveTiles(startingBoard, "UP")).toEqual(expected)
+      expect(takeTurn(startingBoard, "UP")).toEqual(expected)
     })
 
     test("move down", () => {
@@ -138,7 +138,7 @@ describe("moveTiles()", () => {
         beforeMerged,
       }
 
-      expect(moveTiles(startingBoard, "DOWN")).toEqual(expected)
+      expect(takeTurn(startingBoard, "DOWN")).toEqual(expected)
     })
   })
 
@@ -169,7 +169,7 @@ describe("moveTiles()", () => {
         afterMerged,
       }
 
-      expect(moveTiles(startingBoard, "LEFT")).toEqual(expected)
+      expect(takeTurn(startingBoard, "LEFT")).toEqual(expected)
     })
 
     test("move right", () => {
@@ -190,7 +190,7 @@ describe("moveTiles()", () => {
         beforeMerged,
       }
 
-      expect(moveTiles(startingBoard, "RIGHT")).toEqual(expected)
+      expect(takeTurn(startingBoard, "RIGHT")).toEqual(expected)
     })
 
     test("move up", () => {
@@ -210,7 +210,7 @@ describe("moveTiles()", () => {
         beforeMerged,
       }
 
-      expect(moveTiles(startingBoard, "UP")).toEqual(expected)
+      expect(takeTurn(startingBoard, "UP")).toEqual(expected)
     })
 
     test("move down", () => {
@@ -230,7 +230,7 @@ describe("moveTiles()", () => {
         beforeMerged,
       }
 
-      expect(moveTiles(startingBoard, "DOWN")).toEqual(expected)
+      expect(takeTurn(startingBoard, "DOWN")).toEqual(expected)
     })
   })
 
@@ -260,7 +260,7 @@ describe("moveTiles()", () => {
         beforeMerged,
       }
 
-      expect(moveTiles(startingBoard, "LEFT")).toEqual(expected)
+      expect(takeTurn(startingBoard, "LEFT")).toEqual(expected)
     })
 
     test("move right", () => {
@@ -289,7 +289,7 @@ describe("moveTiles()", () => {
         beforeMerged,
       }
 
-      expect(moveTiles(startingBoard, "RIGHT")).toEqual(expected)
+      expect(takeTurn(startingBoard, "RIGHT")).toEqual(expected)
     })
 
     test("move up", () => {
@@ -317,7 +317,7 @@ describe("moveTiles()", () => {
         afterMerged,
       }
 
-      expect(moveTiles(startingBoard, "UP")).toEqual(expected)
+      expect(takeTurn(startingBoard, "UP")).toEqual(expected)
     })
 
     test("move down", () => {
@@ -345,7 +345,7 @@ describe("moveTiles()", () => {
         beforeMerged,
       }
 
-      expect(moveTiles(startingBoard, "DOWN")).toEqual(expected)
+      expect(takeTurn(startingBoard, "DOWN")).toEqual(expected)
     })
   })
 
@@ -373,7 +373,7 @@ describe("moveTiles()", () => {
         beforeMerged,
       }
 
-      expect(moveTiles(startingBoard, "LEFT")).toEqual(expected)
+      expect(takeTurn(startingBoard, "LEFT")).toEqual(expected)
     })
 
     test("move right", () => {
@@ -399,7 +399,7 @@ describe("moveTiles()", () => {
         beforeMerged,
       }
 
-      expect(moveTiles(startingBoard, "RIGHT")).toEqual(expected)
+      expect(takeTurn(startingBoard, "RIGHT")).toEqual(expected)
     })
 
     test("move up", () => {
@@ -425,7 +425,7 @@ describe("moveTiles()", () => {
         beforeMerged,
       }
 
-      expect(moveTiles(startingBoard, "UP")).toEqual(expected)
+      expect(takeTurn(startingBoard, "UP")).toEqual(expected)
     })
 
     test("move down", () => {
@@ -451,7 +451,7 @@ describe("moveTiles()", () => {
         beforeMerged,
       }
 
-      expect(moveTiles(startingBoard, "DOWN")).toEqual(expected)
+      expect(takeTurn(startingBoard, "DOWN")).toEqual(expected)
     })
   })
 })
@@ -624,6 +624,15 @@ describe("isBoardEmpty()", () => {
 })
 
 describe("beforeMerged()", () => {
+  test("no merges", () => {
+    const board = [{ id: 1, value: 2, index: 0 }]
+    const merges = []
+
+    const result = board
+
+    expect(beforeMerged(board, merges)).toEqual(result)
+  })
+
   test("single merge", () => {
     const board = [
       { id: 1, value: 2, index: 0 },
