@@ -21,7 +21,6 @@ const initialState = {
 const LOCAL_STORAGE_KEY = "2048_GAME_STATE"
 
 const use2048 = () => {
-  const { moveDirection, moveCount, addSwipe } = usePlayerInput()
   const [gameState, setState] = useState(initialState)
   const { bestScore, setBestScore } = useBestScoreHook()
   const [initialized, setInitialized] = useState(false)
@@ -73,7 +72,7 @@ const use2048 = () => {
   }, [moveDirection, moveCount])
 
   const gameOver = useMemo(() => {
-    return isGameOver(board)
+    // return isGameOver(board)
   }, [board])
 
   useEffect(() => {
@@ -89,7 +88,7 @@ const use2048 = () => {
   }, [])
 
   const won = useMemo(() => {
-    return hasWon(board) && !keepPlaying
+    // return hasWon(board) && !keepPlaying
   }, [board, keepPlaying])
 
   const newGame = useCallback(() => {

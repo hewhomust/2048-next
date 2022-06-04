@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 5000",
     "lint": "next lint",
     "test": "jest",
     "test:watch": "jest --watch"
@@ -20,7 +20,8 @@
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-swipeable": "^7.0.0",
-    "tailwindcss-elevation": "^1.0.1"
+    "tailwindcss-elevation": "^1.0.1",
+    "zustand": "^4.0.0-rc.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.4",

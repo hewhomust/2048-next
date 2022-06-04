@@ -4,18 +4,45 @@ import NewGameButton from "../components/NewGameButton/NewGameButton"
 import GameBoard from "../components/GameBoard/GameBoard"
 import GameDescription from "../components/GameDescription/GameDescription"
 import use2048 from "../hooks/use2048"
+import useStore from "../stores/2048"
+import { useEffect } from "react"
+import usePlayerInput from "../hooks/usePlayerInput"
 
 export default function Home() {
-  const {
-    board,
-    newGame,
-    score,
-    gameOver,
-    bestScore,
-    won,
-    setKeepPlaying: keepPlaying,
-    addSwipe,
-  } = use2048()
+  const initializeBoard = useStore((state) => state.initializeBoard)
+  const { moveDirection, moveCount, addSwipe } = usePlayerInput()
+  const score = useStore((state) => state.score)
+  const bestScore = useStore((state) => state.bestScore)
+  const newGame = useStore((state) => state.newGame)
+  const gameOver = useStore((state) => state.gameOver)
+  const won = useStore((state) => state.won)
+  const keepPlaying = useStore((state) => state.setKeepPlaying)
+  const move = useStore((state) => state.move)
+
+  // const {
+  //   board,
+  //   newGame,
+  //   score,
+  //   gameOver,
+  //   bestScore,
+  //   won,
+  //   setKeepPlaying: keepPlaying,
+  //   addSwipe,
+  // } = use2048()
+
+  useEffect(() => {
+    initializeBoard()
+  }, [initializeBoard])
+
+  useEffect(() => {
+    if (!moveDirection) {
+      return
+    }
+
+    move(moveDirection)
+  }, [moveDirection, moveCount, move])
+
+  // {...addSwipe}
 
   return (
     <>
@@ -47,7 +74,6 @@ export default function Home() {
           </div>
           <div className="mb-8">
             <GameBoard
-              board={board}
               gameOver={gameOver}
               won={won}
               keepPlaying={keepPlaying}
