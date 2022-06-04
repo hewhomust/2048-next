@@ -26,10 +26,17 @@ const GameBoard = () => {
   const { gameOver } = useGameOver()
   const { won } = useWon()
   const keepPlaying = useStore((state) => state.setKeepPlaying)
+  const gameNumber = useStore((state) => state.gameNumber)
 
   return (
     <>
-      <motion.div className="bg-brown-200 rounded-md  relative p-[0.6rem] lg:p-[0.9rem] elevation-2">
+      <motion.div
+        key={gameNumber}
+        variants={variants}
+        initial="initial"
+        animate="enter"
+        className="bg-brown-200 rounded-md  relative p-[0.6rem] lg:p-[0.9rem] elevation-2"
+      >
         <AnimatePresence>
           {gameOver && <GameOverModal></GameOverModal>}
           {won && <GameWonModal keepPlaying={keepPlaying}></GameWonModal>}

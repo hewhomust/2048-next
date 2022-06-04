@@ -25,6 +25,7 @@ const useStore = create(
     won: false,
     moving: false,
     initialized: false,
+    gameNumber: 0,
     move: (direction) => {
       if (get().moving) {
         return
@@ -104,6 +105,7 @@ const useStore = create(
       set((state) => {
         state.keepPlaying = false
         state.score = 0
+        state.gameNumber += 1
         state.board = initializeBoardState(
           state.board[0] ? maxID(state.board) : 1
         )
