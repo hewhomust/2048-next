@@ -30,7 +30,7 @@ const GameWonModal = ({ keepPlaying }) => {
       initial="initial"
       animate="enter"
       exit="exit"
-      className="absolute top-0 left-0 z-10 grid w-full h-full bg-green-400 opacity-80 place-items-center"
+      className="absolute top-0 left-0 z-[100000] grid w-full h-full bg-green-400 opacity-80 place-items-center"
     >
       <div
         role="dialog"
