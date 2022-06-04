@@ -48,6 +48,7 @@ const useStore = create(
         }
 
         state.score += scoreDelta(state.board, afterMerged)
+
         setTimeout(() => {
           set((state) => {
             state.board = newTile(afterMerged, maxID(nextBoard))

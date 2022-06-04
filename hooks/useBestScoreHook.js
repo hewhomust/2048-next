@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import useStore from "../stores/2048"
 
-const LOCAL_STORAGE_KEY = "2048_BEST_SCORE"
+export const LOCAL_STORAGE_KEY = "2048_BEST_SCORE"
 
 const useBestScore = () => {
   const [bestScore, setBestScoreOriginal] = useState(0)
@@ -13,6 +13,7 @@ const useBestScore = () => {
     }
 
     const localStorageScore = localStorage.getItem(LOCAL_STORAGE_KEY)
+
     const bestScore = score >= localStorageScore ? score : localStorageScore
     localStorage.setItem(LOCAL_STORAGE_KEY, bestScore)
 

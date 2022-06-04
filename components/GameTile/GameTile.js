@@ -12,10 +12,11 @@ const GameTile = ({ tile }) => {
   const tilePositions = useStore((state) => state.tilePositions)
   const animationDuration = useStore((state) => state.animationDuration)
 
-  const { top, left } = tilePositions[tile.index]
+  const { top, left } = tilePositions[tile.index] ?? { top: 0, left: 0 }
 
   return (
     <motion.div
+      data-testid="gameTile"
       style={{
         backgroundColor: backgroundColour,
         color: textColour,
@@ -35,6 +36,7 @@ const GameTile = ({ tile }) => {
           duration: animationDuration / 1000,
         },
       }}
+      data-index={tile.index}
       className={`absolute pointer-events-none select-none aspect-square rounded-md elevation-2 grid place-items-center lg:text-${
         fontSizeDigit + 2
       }xl text-${fontSize} font-bold`}

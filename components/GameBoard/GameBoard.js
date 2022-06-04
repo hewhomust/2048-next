@@ -35,6 +35,7 @@ const GameBoard = () => {
         variants={variants}
         initial="initial"
         animate="enter"
+        data-testid="gameBoard"
         className="bg-brown-200 rounded-md  relative p-[0.6rem] lg:p-[0.9rem] elevation-2"
       >
         <AnimatePresence>

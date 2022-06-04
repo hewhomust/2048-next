@@ -39,12 +39,23 @@ export default function Home() {
       <div {...addSwipe} className="bg-[#FAF8EF] min-h-screen">
         <div className="mx-auto max-w-[500px] lg:px-0 px-10  pt-4 pb-40">
           <div className="flex items-end justify-between mb-6 lg:items-center">
-            <h1 className="text-3xl font-bold lg:text-7xl lg:mt-8 lg:tracking-wide text-brown-100">
+            <h1
+              data-testid="gameTitle"
+              className="text-3xl font-bold lg:text-7xl lg:mt-8 lg:tracking-wide text-brown-100"
+            >
               2048
             </h1>
             <div className="flex gap-1">
-              <ScoreCard title="Score" score={score}></ScoreCard>
-              <ScoreCard title="Best" score={bestScore}></ScoreCard>
+              <ScoreCard
+                data-testid="score"
+                title="Score"
+                score={score}
+              ></ScoreCard>
+              <ScoreCard
+                data-testid="bestScore"
+                title="Best"
+                score={bestScore}
+              ></ScoreCard>
             </div>
           </div>
           <div className="flex items-end justify-between mb-4 lg:mb-10 ">

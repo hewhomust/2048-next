@@ -30,6 +30,7 @@ const GameWonModal = ({ keepPlaying }) => {
       initial="initial"
       animate="enter"
       exit="exit"
+      data-testid="gameWonModal"
       className="absolute top-0 left-0 z-[100000] grid w-full h-full bg-green-400 opacity-80 place-items-center"
     >
       <div
