@@ -71,7 +71,11 @@ const useStore = create(
 
         prev.initialized = true
 
-        if (localStorageState && !isBoardEmpty(localStorageState.board)) {
+        if (
+          localStorageState &&
+          !isBoardEmpty(localStorageState.board) &&
+          localStorageState.board[0].id
+        ) {
           const gameState = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))
 
           prev.board = gameState.board
