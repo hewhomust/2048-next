@@ -26,7 +26,6 @@ const ScoreCard = ({ title, score, ...props }) => {
         {title}
       </motion.div>
       <motion.p
-        key={score}
         data-testid="scoreCardScore"
         variants={variants}
         initial="initial"

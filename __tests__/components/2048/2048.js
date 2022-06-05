@@ -13,6 +13,78 @@ import { act } from "react-dom/test-utils"
 import { LOCAL_STORAGE_KEY as LOCAL_STORAGE_SCORE_KEY } from "../../../hooks/useBestScoreHook"
 import { LOCAL_STORAGE_KEY as LOCAL_STORAGE_GAME_KEY } from "../../../stores/2048"
 
+jest.mock("framer-motion", () => {
+  const FakeTransition = jest
+    .fn()
+    .mockImplementation(({ children }) => children)
+
+  const FakeAnimatePresence = jest
+    .fn()
+    .mockImplementation(({ children }) => (
+      <FakeTransition>{children}</FakeTransition>
+    ))
+
+  const motion = {
+    a: jest
+      .fn()
+      .mockImplementation(({ children, ...rest }) => (
+        <a {...rest}>{children}</a>
+      )),
+    li: jest
+      .fn()
+      .mockImplementation(({ children, ...rest }) => (
+        <li {...rest}>children</li>
+      )),
+    span: jest
+      .fn()
+      .mockImplementation(({ children, ...rest }) => (
+        <span {...rest}>children</span>
+      )),
+    small: jest
+      .fn()
+      .mockImplementation(({ children, ...rest }) => (
+        <small {...rest}>{children}</small>
+      )),
+    h4: jest
+      .fn()
+      .mockImplementation(({ children, ...rest }) => (
+        <h4 {...rest}>{children}</h4>
+      )),
+    h2: jest
+      .fn()
+      .mockImplementation(({ children, ...rest }) => (
+        <h2 {...rest}>{children}</h2>
+      )),
+    p: jest
+      .fn()
+      .mockImplementation(({ children, ...rest }) => (
+        <p {...rest}>{children}</p>
+      )),
+    div: require("react").forwardRef(({ children, ...rest }, ref) => {
+      const { whileTap, animate, initial, variants, whileHover, ...divProps } =
+        rest
+      return (
+        <div {...divProps} ref={ref}>
+          {children}
+        </div>
+      )
+    }),
+    button: jest
+      .fn()
+      .mockImplementation(({ children, ...rest }) => (
+        <button {...rest}>{children}</button>
+      )),
+    custom: jest.fn().mockImplementation((props) => props),
+  }
+
+  return {
+    __esModule: true,
+    motion: motion,
+    AnimatePresence: FakeAnimatePresence,
+    default: jest.fn(),
+  }
+})
+
 const initialStoreState = useStore.getState()
 
 let setItemSpy, getItemSpy
@@ -429,5 +501,140 @@ describe("2048", () => {
         expect(tiles[2]).toHaveTextContent("4")
       }
     })
+  })
+
+  test("can start new game with new game button", async () => {
+    const startingBoard = [
+      { id: 1, value: 2, index: 2 },
+      { id: 2, value: 2, index: 6 },
+      { id: 3, value: 8, index: 10 },
+      { id: 4, value: 8, index: 14 },
+    ]
+
+    act(() => {
+      useStore.setState({
+        board: startingBoard,
+        initializeBoard: () => {},
+      })
+    })
+
+    render(<Home></Home>)
+
+    let tiles = await screen.findAllByTestId("gameTile")
+    const newGameButton = screen.getByText("New Game")
+
+    expect(tiles.length).toBe(4)
+
+    tiles.forEach((tile, index) => {
+      expect(tile).toHaveTextContent(startingBoard[index].value.toString())
+      expect(tile).toHaveAttribute(
+        "data-index",
+        startingBoard[index].index.toString()
+      )
+    })
+
+    fireEvent.click(newGameButton)
+
+    tiles = await screen.findAllByTestId("gameTile")
+
+    expect(tiles.length).toBe(2)
+
+    // new tiles should be 2 or 4
+    tiles.forEach((tile) => {
+      try {
+        expect(tile).toHaveTextContent("2")
+      } catch (error) {
+        expect(tile).toHaveTextContent("4")
+      }
+    })
+
+    const scoreCard = screen.getByTestId("score")
+
+    expect(within(scoreCard).getByTestId("scoreCardScore")).toHaveTextContent(
+      "0"
+    )
+  })
+
+  test("keep playing button keeps game state but removes game won modal", async () => {
+    const startingBoard = [
+      { id: 1, value: 2048, index: 0 },
+      { id: 2, value: 2, index: 1 },
+    ]
+
+    act(() => {
+      useStore.setState({
+        board: startingBoard,
+        // If this isn't here then the game will initialize the board and overwrite the board state above
+        initializeBoard: () => {},
+        score: 100,
+      })
+    })
+
+    render(<Home></Home>)
+
+    let tiles = await screen.findAllByTestId("gameTile")
+
+    let scoreTile = screen.getByTestId("score")
+
+    expect(scoreTile).toBeVisible()
+    expect(within(scoreTile).getByTestId("scoreCardTitle")).toBeVisible()
+    expect(within(scoreTile).getByTestId("scoreCardTitle")).toHaveTextContent(
+      "Score"
+    )
+    await waitFor(() =>
+      expect(within(scoreTile).getByTestId("scoreCardScore")).toBeVisible()
+    )
+    await waitFor(() =>
+      expect(within(scoreTile).getByTestId("scoreCardScore")).toHaveTextContent(
+        "100"
+      )
+    )
+
+    expect(tiles.length).toBe(2)
+
+    tiles.forEach((tile, index) => {
+      expect(tile).toHaveTextContent(startingBoard[index].value.toString())
+      expect(tile).toHaveAttribute(
+        "data-index",
+        startingBoard[index].index.toString()
+      )
+    })
+
+    let modal = await screen.findByTestId("gameWonModal")
+
+    await waitFor(() => expect(modal).toBeVisible())
+
+    const keepPlayingButton = await screen.findByTestId("keepPlayingButton")
+
+    fireEvent.click(keepPlayingButton)
+
+    expect(screen.queryByTestId("gameWonModal")).toBe(null)
+
+    tiles = await screen.findAllByTestId("gameTile")
+    scoreTile = screen.getByTestId("score")
+
+    expect(tiles.length).toBe(2)
+
+    tiles.forEach((tile, index) => {
+      expect(tile).toHaveTextContent(startingBoard[index].value.toString())
+      expect(tile).toHaveAttribute(
+        "data-index",
+        startingBoard[index].index.toString()
+      )
+    })
+
+    expect(scoreTile).toBeVisible()
+    expect(within(scoreTile).getByTestId("scoreCardTitle")).toBeVisible()
+    expect(within(scoreTile).getByTestId("scoreCardTitle")).toHaveTextContent(
+      "Score"
+    )
+    await waitFor(() =>
+      expect(within(scoreTile).getByTestId("scoreCardScore")).toBeVisible()
+    )
+    await waitFor(() =>
+      expect(within(scoreTile).getByTestId("scoreCardScore")).toHaveTextContent(
+        "100"
+      )
+    )
   })
 })
