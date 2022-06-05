@@ -1,3 +1,5 @@
+import { curry } from "ramda"
+
 function getBaseLog(x, y) {
   return Math.log(y) / Math.log(x)
 }
@@ -31,4 +33,18 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max)
 }
 
-export { getBaseLog, transposeArray, padArrayStart, padArrayEnd, getRandomInt }
+const longerThan = curry((length, l) => {
+  return l.length > length
+})
+
+const maxNumber = (l) => Math.max(...l)
+
+export {
+  getBaseLog,
+  transposeArray,
+  padArrayStart,
+  padArrayEnd,
+  getRandomInt,
+  longerThan,
+  maxNumber,
+}

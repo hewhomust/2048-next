@@ -13,6 +13,7 @@ import { act } from "react-dom/test-utils"
 import { LOCAL_STORAGE_KEY as LOCAL_STORAGE_SCORE_KEY } from "../../../hooks/useBestScoreHook"
 import { LOCAL_STORAGE_KEY as LOCAL_STORAGE_GAME_KEY } from "../../../stores/2048"
 
+const initialStoreState = useStore.getState()
 jest.mock("framer-motion", () => {
   const FakeTransition = jest
     .fn()
@@ -71,7 +72,7 @@ jest.mock("framer-motion", () => {
     }),
     button: jest
       .fn()
-      .mockImplementation(({ children, ...rest }) => (
+      .mockImplementation(({ children, whileHover, ...rest }) => (
         <button {...rest}>{children}</button>
       )),
     custom: jest.fn().mockImplementation((props) => props),
@@ -84,8 +85,6 @@ jest.mock("framer-motion", () => {
     default: jest.fn(),
   }
 })
-
-const initialStoreState = useStore.getState()
 
 let setItemSpy, getItemSpy
 let mockStorage = {}
