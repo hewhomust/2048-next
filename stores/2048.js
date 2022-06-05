@@ -85,7 +85,7 @@ const useStore = create(
           return prev
         }
 
-        prev.board = initializeBoardState(prev.board[0] ? maxID(prev.board) : 1)
+        prev.board = initializeBoardState(1)
         return prev
       })
     },
@@ -111,9 +111,7 @@ const useStore = create(
         state.keepPlaying = false
         state.score = 0
         state.gameNumber += 1
-        state.board = initializeBoardState(
-          state.board[0] ? maxID(state.board) : 1
-        )
+        state.board = initializeBoardState(1)
         return state
       })
     },
