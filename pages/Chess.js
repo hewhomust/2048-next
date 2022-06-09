@@ -5,32 +5,28 @@ import { useState, useEffect, useRef } from "react"
 import { motion } from "framer-motion"
 import produce from "immer"
 
-const useStore = create(
-  immer((set, get) => ({
-    tilePositions: {},
-    tileHeight: 0,
-    setTilePositions: (index, top, left) => {
-      set((state) => {
-        state.tilePositions[index] = { top, left }
-        return state
-      })
-    },
-    setTileHeight: (height) => {
-      set((state) => {
-        state.tileHeight = height
-        return state
-      })
-    },
-  }))
-)
-
-const BOARD_SIZE = 64
+// const useStore = create(
+//   immer((set, get) => ({
+//     tilePositions: {},
+//     tileHeight: 0,
+//     setTilePositions: (index, top, left) => {
+//       set((state) => {
+//         state.tilePositions[index] = { top, left }
+//         return state
+//       })
+//     },
+//     setTileHeight: (height) => {
+//       set((state) => {
+//         state.tileHeight = height
+//         return state
+//       })
+//     },
+//   }))
+// )
 
 const indexToCoords = (index) => {
   return { row: Math.floor(index / 8), col: index % 8 }
 }
-
-const isEven = (x) => x % 2 == 0
 
 const sumCoords = (coords) => coords.row + coords.col
 
@@ -58,12 +54,6 @@ const Piece = ({ piece }) => {
         left: left,
         transition: {
           duration: 0.6,
-          //   top: {
-          //     duration: 0.25,
-          //   },
-          //   left: {
-          //     delay: 0.25,
-          //   },
         },
       }}
       className="absolute w-full h-full rounded-full bg-neutral-700"
@@ -117,7 +107,6 @@ const Chess = () => {
   const [board1, setBoard1] = useState(initialBoard)
 
   const move = () => {
-    console.log(3)
     setBoard1((prev) => {
       return produce(prev, (draft) => {
         draft[0].index = 10

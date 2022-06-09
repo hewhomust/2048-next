@@ -1,4 +1,7 @@
 import { curry } from "ramda"
+import * as RA from "ramda-adjunct"
+import { Either } from "monet"
+import * as R from "ramda"
 
 function getBaseLog(x, y) {
   return Math.log(y) / Math.log(x)
@@ -39,6 +42,22 @@ const longerThan = curry((length, l) => {
 
 const maxNumber = (l) => Math.max(...l)
 
+function trampoline(f) {
+  return function trampolined(...args) {
+    let result = f.bind(null, ...args)
+
+    while (typeof result === "function") result = result()
+
+    return result
+  }
+}
+
+const fromNullable = (x) => {
+  return RA.isNull(x) || RA.isUndefined(x) ? Either.Left(null) : Either.Right(x)
+}
+
+const indexedMap = R.addIndex(R.map)
+
 export {
   getBaseLog,
   transposeArray,
@@ -47,4 +66,7 @@ export {
   getRandomInt,
   longerThan,
   maxNumber,
+  trampoline,
+  fromNullable,
+  indexedMap,
 }
