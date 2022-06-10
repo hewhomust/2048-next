@@ -18,17 +18,17 @@ describe("newSquareNumber()", () => {
 
   it("receiving a random value less than 0.7 returns 2", () => {
     jest.spyOn(Math, "random").mockReturnValue(0.6)
-    expect(newSquareNumber()).toBe("2")
+    expect(newSquareNumber().run()).toBe("2")
   })
 
   it("receiving a random value greater than 0.9 returns 4", () => {
     jest.spyOn(Math, "random").mockReturnValue(0.95)
-    expect(newSquareNumber()).toBe("4")
+    expect(newSquareNumber().run()).toBe("4")
   })
 
   it("receiving a random value equal to 0.9 returns 4", () => {
     jest.spyOn(Math, "random").mockReturnValue(0.9)
-    expect(newSquareNumber()).toBe("4")
+    expect(newSquareNumber().run()).toBe("4")
   })
 })
 
@@ -463,7 +463,7 @@ describe("initializeBoard()", () => {
   })
 
   test("new board has two filled tiles", () => {
-    const board = initializeBoard()
+    const board = initializeBoard().run()
 
     expect(board.length).toBe(2)
   })
@@ -473,7 +473,7 @@ describe("initializeBoard()", () => {
     const outcomes = {}
 
     for (let i = 0; i < trials; i++) {
-      const board = initializeBoard()
+      const board = initializeBoard().run()
       const filledTiles = flatten(board).filter((tile) => {
         return tile
       })

@@ -8,6 +8,7 @@ import {
   scoreDelta,
   isBoardEmpty,
   maxID,
+  newSquareNumber,
 } from "../lib/2048"
 
 export const LOCAL_STORAGE_KEY = "2048_GAME_STATE"
@@ -51,10 +52,8 @@ const useStore = create(
 
         setTimeout(() => {
           set((state) => {
-            state.board = newTile(afterMerged, maxID(nextBoard))
-
+            state.board = newTile(afterMerged, maxID(nextBoard)).run()
             state.moving = false
-
             return state
           })
         }, get().animationDuration)
@@ -85,7 +84,7 @@ const useStore = create(
           return prev
         }
 
-        prev.board = initializeBoardState(1)
+        prev.board = initializeBoardState(1).run()
         return prev
       })
     },
@@ -111,7 +110,7 @@ const useStore = create(
         state.keepPlaying = false
         state.score = 0
         state.gameNumber += 1
-        state.board = initializeBoardState(1)
+        state.board = initializeBoardState(1).run()
         return state
       })
     },
