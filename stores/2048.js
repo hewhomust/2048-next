@@ -62,10 +62,7 @@ const useStore = create(
 
       set((state) => {
         state.moving = true
-        return state
-      })
 
-      set((state) => {
         const { afterMerged, beforeMerged: nextBoard } = takeTurn(
           state.board,
           direction
