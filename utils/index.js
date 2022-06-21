@@ -56,6 +56,14 @@ const fromNullable = (x) => {
   return RA.isNull(x) || RA.isUndefined(x) ? Either.Left(null) : Either.Right(x)
 }
 
+const tryCatch = (f) => {
+  try {
+    return Either.right(f())
+  } catch (error) {
+    return Either.Left(error)
+  }
+}
+
 const indexedMap = R.addIndex(R.map)
 
 export {
@@ -69,4 +77,5 @@ export {
   trampoline,
   fromNullable,
   indexedMap,
+  tryCatch,
 }

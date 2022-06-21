@@ -1,3 +1,6 @@
+import produce from "immer"
+import { Either } from "monet"
+import { identity } from "ramda"
 import create from "zustand"
 import { immer } from "zustand/middleware/immer"
 import {
@@ -11,7 +14,32 @@ import {
   newSquareNumber,
 } from "../lib/2048"
 
+import { tryCatch } from "../utils"
+
 export const LOCAL_STORAGE_KEY = "2048_GAME_STATE"
+
+const initializeBoard = (key) => (storage) => (prev) =>
+  tryCatch(() => JSON.parse(storage.getItem(key)))
+    .chain((localStorageState) =>
+      isBoardEmpty(localStorageState.board) || !localStorageState.board[0].id
+        ? Either.Left("")
+        : Either.Right(
+            produce(prev, (draft) => {
+              draft.board = localStorageState.board
+              draft.score = localStorageState.score
+              draft.initialized = true
+              draft.keepPlaying = localStorageState.keepPlaying
+            })
+          )
+    )
+    .cata(
+      () =>
+        produce(prev, (draft) => {
+          draft.initialized = true
+          draft.board = initializeBoardState(1).run()
+        }),
+      identity
+    )
 
 const useStore = create(
   immer((set, get) => ({
@@ -63,30 +91,7 @@ const useStore = create(
       })
     },
     initializeBoard: () => {
-      set((prev) => {
-        const localStorageState =
-          localStorage.getItem(LOCAL_STORAGE_KEY) &&
-          JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))
-
-        prev.initialized = true
-
-        if (
-          localStorageState &&
-          !isBoardEmpty(localStorageState.board) &&
-          localStorageState.board[0].id
-        ) {
-          const gameState = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))
-
-          prev.board = gameState.board
-          prev.score = gameState.score
-          prev.keepPlaying = gameState.keepPlaying
-
-          return prev
-        }
-
-        prev.board = initializeBoardState(1).run()
-        return prev
-      })
+      set(initializeBoard(LOCAL_STORAGE_KEY)(localStorage))
     },
     setTileHeight: (tileHeight) => {
       set((state) => {
